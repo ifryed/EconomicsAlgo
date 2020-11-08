@@ -31,9 +31,9 @@ def calcPareto(res_matrix: list):
 
     # Build an objective function.
     sum_var = 0
-    for j in range(m):
+    for i in range(n):
         tmp_sum = 0
-        for i in range(n):
+        for j in range(m):
             tmp_sum += res_matrix[i][j] * mat_var[i][j]
         sum_var += cvxpy.log(tmp_sum)
     obj = cvxpy.Maximize(sum_var)
@@ -53,7 +53,6 @@ def calcPareto(res_matrix: list):
 
 def main():
     mat = [
-        [81, 19, 0],
         [81, 19, 0],
         [80, 0, 20],
     ]
