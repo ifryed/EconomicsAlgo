@@ -14,14 +14,6 @@ def calcPareto(res_matrix: list):
             constraints.append(mat_var[i][j] >= 0)
             constraints.append(mat_var[i][j] <= 1)
 
-    # All equal
-    z = cvxpy.Variable()
-    for i in range(n):
-        right_side = 0
-        for j in range(m):
-            right_side += res_matrix[i][j] * mat_var[i][j]
-        constraints.append(right_side == z)
-
     # Sum of each colmun is 1
     for i in range(m):
         sum_con = 0
