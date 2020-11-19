@@ -34,7 +34,7 @@ def envy_graph(agents: List[Agent], bundle_mat: List[List[int]]) -> nx.Graph:
     return en_v_graph
 
 
-def dispGraph(val_mat, bundle_mat):
+def dispGraph(title, val_mat, bundle_mat):
     n_players, n_items = val_mat.shape
     agents = []
     for i in range(n_players):
@@ -43,6 +43,7 @@ def dispGraph(val_mat, bundle_mat):
     e_graph = envy_graph(agents, bundle_mat)
 
     # Display Graph
+    plt.title(title)
     edge_labels = dict([((u, v,), d['weight'])
                         for u, v, d in e_graph.edges(data=True)])
     node_labels = {i: ("Agent:{:d},V({:})".format(i, x.value)) for i, x in enumerate(agents)}
@@ -57,19 +58,47 @@ def dispGraph(val_mat, bundle_mat):
 
 
 def main():
+    # Envy Triangle
     val_mat = np.array([
-        [1, 4, 3, 5, 4, 2],
-        [4, 2, 1, 2, 3, 6],
-        [4, 2, 1, 4, 1, 4],
+        [1, 1, 1, 2, 1, 0],
+        [1, 1, 1, 2, 1, 3],
+        [10, 1, 1, 2, 1, 3],
     ])
 
     bundle_mat = [
-        [0, 3],
-        [1, 2],
-        [4, 5],
+        [0, 1],
+        [2, 3],
+        [4, 5]
     ]
+    dispGraph("Triangle", val_mat, bundle_mat)
 
-    dispGraph(val_mat, bundle_mat)
+    # Mexican Standoff
+    val_mat = np.array([
+        [1, 1, 10, 10, 10, 10],
+        [10, 10, 1, 1, 10, 10],
+        [10, 10, 10, 10, 1, 1],
+    ])
+
+    bundle_mat = [
+        [0, 1],
+        [2, 3],
+        [4, 5]
+    ]
+    dispGraph("Mexican Standoff", val_mat, bundle_mat)
+
+    # Richi-Rich
+    val_mat = np.array([
+        [1, 1, 1, 1, 10, 10],
+        [1, 1, 1, 1, 10, 10],
+        [1, 1, 1, 1, 10, 10],
+    ])
+
+    bundle_mat = [
+        [0, 1],
+        [2, 3],
+        [4, 5]
+    ]
+    dispGraph("Richi-Rich", val_mat, bundle_mat)
 
 
 if __name__ == '__main__':
