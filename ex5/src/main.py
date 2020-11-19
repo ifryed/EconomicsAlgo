@@ -46,7 +46,7 @@ def dispGraph(title, val_mat, bundle_mat):
     plt.title(title)
     edge_labels = dict([((u, v,), d['weight'])
                         for u, v, d in e_graph.edges(data=True)])
-    node_labels = {i: ("Agent:{:d},V({:})".format(i, x.value)) for i, x in enumerate(agents)}
+    node_labels = {i: ("Agent:{:d}\nV({:})".format(i, x.value)) for i, x in enumerate(agents)}
     pos = nx.nx.spring_layout(e_graph)
     nx.draw_networkx_edge_labels(e_graph, pos, edge_labels=edge_labels)
     nx.draw_networkx(e_graph, pos=pos, with_labels=True,
@@ -70,7 +70,7 @@ def main():
         [2, 3],
         [4, 5]
     ]
-    dispGraph("Triangle", val_mat, bundle_mat)
+    dispGraph("Envy Triangle", val_mat, bundle_mat)
 
     # Mexican Standoff
     val_mat = np.array([
