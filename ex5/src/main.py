@@ -8,6 +8,12 @@ from Agent import Agent
 
 
 def getItemsValue(items: List[int], agent: Agent) -> float:
+    """
+    Returns the value of a list of items according to an Agent
+    :param items: The list of items
+    :param agent: The agent
+    :return: The sum of the items
+    """
     tot_val = 0.
     for item in items:
         tot_val += agent.item_value(item)
@@ -15,6 +21,12 @@ def getItemsValue(items: List[int], agent: Agent) -> float:
 
 
 def envy_graph(agents: List[Agent], bundle_mat: List[List[int]]) -> nx.Graph:
+    """
+    Create the 'Envy Graph' according to the agents, and their items
+    :param agents: The agents list
+    :param bundle_mat: A list of each agents items
+    :return: An directional graph representing the 'Envy Graph'
+    """
     en_v_graph = nx.DiGraph()
 
     # Get each agent's value
@@ -34,7 +46,13 @@ def envy_graph(agents: List[Agent], bundle_mat: List[List[int]]) -> nx.Graph:
     return en_v_graph
 
 
-def dispGraph(title, val_mat, bundle_mat):
+def dispGraph(title: str, val_mat: np.ndarray, bundle_mat: np.ndarray) -> None:
+    """
+    Displays the 'Envy graph'
+    :param title: The title of the plot
+    :param val_mat: The items values according to each agent
+    :param bundle_mat: The list of eachs agents items.
+    """
     n_players, n_items = val_mat.shape
     agents = []
     for i in range(n_players):
