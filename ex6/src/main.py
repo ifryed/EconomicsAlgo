@@ -50,23 +50,24 @@ def vcg(agents: List[Agent], num_options: int):
     for idx, agent in enumerate(agents):
         tmp_opt_mat = np.array([x.values for i, x in enumerate(agents) if not i is idx])
         best_op = np.argmax(tmp_opt_mat.sum(0))
-        agent.pay = agent.org_pay + tmp_opt_mat.sum(0)[chosen_opt] - tmp_opt_mat.sum(0)[best_op]
+        agent.pay = tmp_opt_mat.sum(0)[best_op] - tmp_opt_mat.sum(0)[chosen_opt]
 
     printOutcome(chosen_opt, agents)
 
 
-# def main():
-#     # Envy Triangle
-#     agents_lst = []
-#     agents_lst.append(Agent([-8, -4, -3]))
-#     agents_lst.append(Agent([-5, -8, -3]))
-#     agents_lst.append(Agent([-3, -5, -1]))
-#
-#     vcg(agents_lst, 3)
+def main():
+    # Envy Triangle
+    agents_lst = []
+    agents_lst.append(Agent([8, 4, 3]))
+    agents_lst.append(Agent([5, 8, 1]))
+    agents_lst.append(Agent([3, 5, 3]))
+
+    vcg(agents_lst, 3)
 
 
 if __name__ == '__main__':
     import doctest
 
     # doctest.testmod(verbose=True)
-    doctest.testfile('test.txt',verbose=True)
+    # doctest.testfile('test.txt',verbose=True)
+    main()
