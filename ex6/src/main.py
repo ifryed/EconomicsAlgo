@@ -58,9 +58,11 @@ def vcg(agents: List[Agent], num_options: int):
 def main():
     # Envy Triangle
     agents_lst = []
-    agents_lst.append(Agent([8, 4, 3]))
-    agents_lst.append(Agent([5, 8, 1]))
-    agents_lst.append(Agent([3, 5, 3]))
+    agents_lst.append(Agent([10, 10, 10, 10, 10]))
+    agents_lst.append(Agent([0, 8, 8, 8, 8]))
+    agents_lst.append(Agent([0, 0, 6, 6, 6]))
+    agents_lst.append(Agent([0, 0, 0, 4, 4]))
+    agents_lst.append(Agent([0, 0, 0, 0, 2]))
 
     vcg(agents_lst, 3)
 
