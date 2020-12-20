@@ -13,14 +13,27 @@ from itertools import chain, combinations
 
 
 def powerset(iterable):
-    """Taken from pythons' itertools
-    https://docs.python.org/3/library/itertools.html#itertools-recipes"""
+    """
+    Generates the all the sub-groups of a givan list
+    Taken from pythons' itertools
+    https://docs.python.org/3/library/itertools.html#itertools-recipes
+    :param iterable the list
+    """
 
     s = list(iterable)
     return chain.from_iterable(combinations(s, r) for r in range(len(s) + 1))
 
 
 def optimal_order(road_graph: DiGraph, source: str, targets: Set[str], verbos=False) -> (List[str], float):
+    """
+    Returns the optimal order to travel throughout the nodes
+
+    :param road_graph: A directed-graph (Networkx)
+    :param source: First and last node
+    :param targets: A set of all the nodes that the path must past through
+    :param verbos: If True, will plot the dynamic matrix
+    :return: The optimal path and total weight
+    """
     if len(targets) < 1:
         return [], 0
     targets = list(targets)
@@ -77,22 +90,35 @@ def optimal_order(road_graph: DiGraph, source: str, targets: Set[str], verbos=Fa
     return path, path_weight
 
 
-def optimal_order_two(road_graph, src, trgs):
+def optimal_order_two(road_graph: DiGraph, source: str, targets: Set[str]) -> List[tuple]:
+    """
+    Returns the optimal order to travel throughout the nodes.
+     The function checks whether it is faster to
+    split the path in to two cabs or stay with one.
+
+    :param road_graph: A directed-graph (Networkx)
+    :param source: First and last node
+    :param targets: A set of all the nodes that the path must past through
+    :return: The optimal path or paths and total weight
+    """
     best_score = float('inf')
     best_way = None
-    for s in powerset(trgs):
+    for s in powerset(targets):
         s = set(s)
-        not_s = trgs - s
+        not_s = targets - s
+        # Checking set A
+        path_1, weight1 = optimal_order(road_graph, source, s)
 
-        path_1, weight1 = optimal_order(road_graph, src, s)
-        path_2, weight2 = optimal_order(road_graph, src, not_s)
+        # Checking set B
+        path_2, weight2 = optimal_order(road_graph, source, not_s)
         score = weight1 + weight2
 
-        if score < best_score:
+        if best_score >= score:
             best_score = score
             best_way = [(path_1, weight1),
                         (path_2, weight2)]
-
+    if len(best_way[1][0]) is 0:
+        return best_way[:1]
     return best_way
 
 
@@ -105,25 +131,25 @@ def main():
         ('c', '0', 19),
         ('0', 'd', 3),
         ('d', '0', 3),
+        ('d', 'b', 7),
         ('b', 'c', 7),
-
         ('a', '0', 9),
     ]
     road_graph.add_weighted_edges_from(roads)
     src = '0'
     trgs = {'a', 'b', 'c', 'd'}
-    trgs = {'a', 'd','c'}
+    # trgs = {'a', 'd', 'c'}
     # path, weights = optimal_order(road_graph, src, trgs)
     # print('->'.join(path))
     # print("Weight:{:.3f}".format(weights))
 
     best = optimal_order_two(road_graph, src, trgs)
     tot = 0
-    for i,path in enumerate(best):
+    for i, path in enumerate(best):
         print('Path {}'.format(i))
-        print('\t',end='')
+        print('\t', end='')
         print('->'.join(path[0]))
-        print('\t',end='')
+        print('\t', end='')
         print("Weight: {:.3f}".format(path[1]))
         tot += path[1]
     print("Total Weight:{:.3f}".format(tot))
