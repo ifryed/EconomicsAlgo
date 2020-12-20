@@ -35,7 +35,7 @@ def max_revenue_auction2(agent1: Uniform, agent2: Uniform,
     Agent 1 wins and pays 22.0
     >>> max_revenue_auction2(agent1, agent2, 19, 29)
     Agent 2 wins and pays 24.0
-    >>> max_revenue_auction2(agent1, agent2, 12, 19)
+    >>> max_revenue_auction2(agent1, agent2, 20, 25)
     No agent wins
     """
 
@@ -56,7 +56,7 @@ def main():
     # price = max_revenue_auction(agent1, 15)
     # print("Agent 1 Payed: {:.2f}".format(price))
 
-    max_revenue_auction2(agent1, agent2, 12, 19)
+    max_revenue_auction2(agent1, agent2, 20, 25)
 
 
 if __name__ == '__main__':
