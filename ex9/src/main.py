@@ -113,7 +113,8 @@ def optimal_order_two(road_graph: DiGraph, source: str, targets: Set[str]) -> Li
         path_2, weight2 = optimal_order(road_graph, source, not_s)
         score = weight1 + weight2
 
-        if best_score >= score:
+        print(score)
+        if best_score > score:
             best_score = score
             best_way = [(path_1, weight1),
                         (path_2, weight2)]
@@ -138,7 +139,7 @@ def main():
     road_graph.add_weighted_edges_from(roads)
     src = '0'
     trgs = {'a', 'b', 'c', 'd'}
-    # trgs = {'a', 'd', 'c'}
+    trgs = {'a', 'd', 'c'}
     # path, weights = optimal_order(road_graph, src, trgs)
     # print('->'.join(path))
     # print("Weight:{:.3f}".format(weights))
